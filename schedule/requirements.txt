@@ -1,2 +1,4 @@
 schedule
 pika
+peewee
+psycopg2-binary

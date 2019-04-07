@@ -1,6 +1,6 @@
 version: '3.0'
 volumes:
-  rabbitmq-data:
+  pgsql-data:
 
 services:
         schedule:
@@ -10,15 +10,20 @@ services:
                  build: ./publisher/
                  restart: on-failure
 
-        rabbitmq:
-                image: rabbitmq:3-management
+        pgsql:
+                image: postgres
+                restart: always
+                environment:
+                        - POSTGRES_PASSWORD=Pasd@1234
                 volumes:
-                        - rabbitmq-data:/var/lib/rabbitmq
+                        - pgsql-data:/var/lib/rabbitmq
                 restart: on-failure
                 ports:
-                        - 15672:15672
-                        - 5672:5672
-                environment:
-                        - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.9
+                        - 5432:5432
+        adminer:
+                image: adminer
+                restart: always
+                ports:
+                        - 8080:8080
 
 
