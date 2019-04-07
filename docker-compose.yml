@@ -1,0 +1,19 @@
+version: '3.0'
+volumes:
+  dbdata:
+
+services:
+        schedule:
+                 build: ./schedule/
+                 restart: on-failure
+        publisher:
+                 build: ./publisher/
+                 restart: on-failure
+
+        rabbitmq:
+                image: rabbitmq:3-management
+                environment:
+                        - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.9
+                        - RABBITMQ_DEFAULT_USER=amqp
+                        - RABBITMQ_DEFAULT_PASSWORD=amqp
+
