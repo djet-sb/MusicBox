@@ -1,6 +1,6 @@
 version: '3.0'
 volumes:
-  dbdata:
+  rabbitmq-data:
 
 services:
         schedule:
@@ -12,8 +12,13 @@ services:
 
         rabbitmq:
                 image: rabbitmq:3-management
+                volumes:
+                        - rabbitmq-data:/var/lib/rabbitmq
+                restart: on-failure
+                ports:
+                        - 15672:15672
+                        - 5672:5672
                 environment:
                         - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.9
-                        - RABBITMQ_DEFAULT_USER=amqp
-                        - RABBITMQ_DEFAULT_PASSWORD=amqp
+
 
