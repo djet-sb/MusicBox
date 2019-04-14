@@ -94,6 +94,28 @@ def creation_handler():
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'response': 'OK'})
 
+@route('/publication/update', method='POST')
+def creation_handler():
+    pass
+
+@route('/publication/list', method='GET')
+def creation_handler():
+    pass
+
+@route('/publication/get', method='GET')
+def creation_handler():
+    pass
+
+
+@route('/channel/list', method='GET')
+def creation_handler():
+    pass
+
+@route('/channel/create', method='POST')
+def creation_handler():
+    pass
+
+
 
 debug(True)
 run(host='127.0.0.1', port=8280, reload=True)
