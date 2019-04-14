@@ -9,6 +9,9 @@ services:
         publisher:
                  build: ./publisher/
                  restart: on-failure
+        api:
+                 build: ./api/
+                 restart: on-failure
 
         pgsql:
                 image: postgres

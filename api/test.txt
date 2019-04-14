@@ -1,0 +1,19 @@
+from selectel.storage import Container
+import io
+import tempfile
+temp_file_mp3 = tempfile.NamedTemporaryFile()
+print(temp_file_mp3.name)
+container = Container("82926_music_box", "IPr6ugmaF6", "MusicBOX")
+print(container.list().keys())
+file = container.get("/rap_channel/ЕА7 - Magic Phase - Impossible Love.mp3")
+print(type(file))
+
+print(io.TextIOWrapper(io.BytesIO(file), encoding="utf8"))
+
+#import telegram
+#bot = telegram.Bot(token="735879873:AAFMHSGN9khiTjjf5G5L5mtHeygdI7hSwPc")
+#bot.send_message(chat_id="-1001351914963",text="asdsadsdasd")
+
+with open(temp_file_mp3.name,'wb') as f:
+    f.write(file)
+
