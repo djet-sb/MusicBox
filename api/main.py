@@ -10,11 +10,12 @@ db_name = 'musicbox'
 db = PostgresqlDatabase(
     db_name, user=user,
     password=password,
-    host='localhost'
+#    host='localhost'
+    host = 'pgsql'
 )
 
 
-class musicbox_publications(Model):
+class publications(Model):
     channel_id = IntegerField()
     publish_in = IntegerField()
     published_in = IntegerField(default=0)
@@ -23,7 +24,16 @@ class musicbox_publications(Model):
     class Meta:
         database = db  # This model uses the "people.db" database.
 
-musicbox_publications.create_table(True)
+class channels(Model):
+    channel_name = TextField()
+    chat_id = IntegerField()
+    token = TextField()
+
+    class Meta:
+        database = db  # This model uses the "people.db" database.
+
+channels.create_table(True)
+publications.create_table(True)
 
 #curl --header "Content-Type: application/json"  --request POST --data '{"publish_in":12321321,"channel_id":12,"channel_data":{"albom_cover":"File_path","track_file":"Track_file_pach","track_name":"Test track name","artist_name":"test artist name","publish_in":"123653543"}}'  http://127.0.0.1:8280/publication/add
 
@@ -41,7 +51,7 @@ def create_new_publication(channel_id, channel_data, publish_in):
             raise ValueError
     except (TypeError, KeyError):
         raise ValueError
-    publish_id = musicbox_publications.create(
+    publish_id = publications.create(
         channel_id=channel_id,
         publish_in=publish_in,
         publish_data=channel_data
