@@ -1,0 +1,8 @@
+# source ./example.envs
+
+export UI_SENTRY_DSN=none
+export DATABASE_HOST=127.0.0.1
+export DATABASE_NAME=musicbox
+export DATABASE_PASSWORD=Pasd@1234
+export DATABASE_USER=postgres
+export UI_PORT=8888
