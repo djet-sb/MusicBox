@@ -5,13 +5,18 @@ volumes:
 services:
         schedule:
                  build: ./schedule/
+                 env_file: docker-compose.envs
                  restart: on-failure
         publisher:
                  build: ./publisher/
+                 env_file: docker-compose.envs
                  restart: on-failure
         api:
                  build: ./api/
+                 env_file: docker-compose.envs
                  restart: on-failure
+                 ports:
+                       - 8280:8280
 
         pgsql:
                 image: postgres
@@ -27,6 +32,4 @@ services:
                 image: adminer
                 restart: always
                 ports:
-                        - 8080:8080
-
-
+                       - 8080:8080

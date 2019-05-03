@@ -1,13 +1,15 @@
 from playhouse.postgres_ext import *
+import config
 
-user = 'postgres'
-password = 'Pasd@1234'
-db_name = 'musicbox'
+user = config.DATABASE.user
+password = config.DATABASE.password
+db_name = config.DATABASE.db_name
+db_host = config.DATABASE.host
 
 db = PostgresqlDatabase(
     db_name, user=user,
     password=password,
-    host='localhost'
+    host=db_host
 )
 
 

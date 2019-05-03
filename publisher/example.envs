@@ -1,0 +1,5 @@
+export PUBLISHER_PORT=8122
+export CDN_NAME=MusicBOX
+export CDN_PASSWORD=IPr6ugmaF6
+export CDN_USER=82926_music_box
+export PUBLISHER_SENTRY_DSN=https://8b241f6ae1794b8b897b1434dfb4b16e:9cb3ef16daa04889baf7d5348f7e12e8@sentry.io/1422595

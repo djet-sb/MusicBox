@@ -2,13 +2,14 @@ from bottle import route, request, abort
 import bottle
 import tempfile
 import telegram
+import config
 from selectel.storage import Container
-container = Container("82926_music_box", "IPr6ugmaF6", "MusicBOX")
+container = Container(config.CDN.user, config.CDN.password, config.CDN.name)
 from raven import Client
 from raven.contrib.bottle import Sentry
 app = bottle.app()
 app.catchall = False
-client = Client('https://8b241f6ae1794b8b897b1434dfb4b16e:9cb3ef16daa04889baf7d5348f7e12e8@sentry.io/1422595')
+client = Client(config.COMMON.sentry_dsn)
 app = Sentry(app, client)
 
 def download_cdn_file(path_file_cdn):
@@ -71,5 +72,5 @@ def do_publish():
 
 
 bottle.debug(True)
-bottle.run(app=app,host='127.0.0.1', port=8280, reload=True)
+bottle.run(app=app,host='0.0.0.0', port=config.COMMON.publisher_port, reload=True)
 
