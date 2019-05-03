@@ -19,6 +19,9 @@ class musicbox(Model):
     publish_data = JSONField()
     class Meta:
         database = db  # This model uses the "people.db" database.
-
-musicbox.create_table(True)
+try:
+    musicbox.create_table(True)
+except OperationalError as err:
+    print(err)
+    exit(1)
 
