@@ -1,4 +1,4 @@
-from bottle import route, run, TEMPLATE_PATH, request, jinja2_template as template, view
+from bottle import route, run, TEMPLATE_PATH, request, jinja2_template as template, view, redirect
 from Helpers.api import ChannelsHelper
 import config
 TEMPLATE_PATH.append('./templates')
@@ -14,9 +14,25 @@ def creation_handler():
 @route('/channel/new', method='GET')
 @view('index.html')
 def creation_handler():
-
     return template('index.html', channels_list=channels.list(), type="channel_settings", channel_info={})
 
+@route('/channel/create', method='POST')
+@view('index.html')
+def creation_handler():
+    chat_id = request.forms.get('chat_id')
+    channel_name = request.forms.get('channel_name')
+    token = request.forms.get('token')
+    id = channels.create(channel_name,chat_id,token)['channel_id']
+    channels.set_channels()
+    redirect(f"/channel/{id}", 302)
+
+
+@route('/channel/delete/<id>', method='GET')
+@view('index.html')
+def creation_handler(id):
+    channels.delete(id)
+    channels.set_channels()
+    return f"Channel {id} has by deleted"
 
 @route('/channel/<id>', method='GET')
 @view('index.html')
@@ -35,7 +51,6 @@ def creation_handler(id):
 @route('/enter', method='GET')
 def creation_handler():
     return template('enter.html')
-
 
 
 run(

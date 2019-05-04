@@ -45,8 +45,8 @@ def create_channel(name,chat_id,token):
         channel_name=name,
         chat_id=chat_id,
         token=token
-    )
-    return {"publish_id": channel_id}
+    ).id
+    return channel_id
 
 def delete_channel(channel_id):
     return Channels.delete().where(Channels.id == channel_id).execute()
@@ -244,7 +244,7 @@ def creation_handler():
     # return 200 Success
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'response': 'OK',
-                       'channel_id': str(channel_id)})
+                       'channel_id': channel_id})
 
 
 @route('/channel/del/<channel_id>', method='GET')
