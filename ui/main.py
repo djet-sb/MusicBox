@@ -38,14 +38,12 @@ def creation_handler(id):
 @view('index.html')
 def creation_handler(id):
     channel_info = channels.get(id)
-    print(channel_info)
     return template('index.html', channels_list=channels.list(), type="publication_list", channel_info=channel_info)
 
 @route('/channel/settings/<id>', method='GET')
 @view('index.html')
 def creation_handler(id):
     channel_info = channels.get(id)
-    print(channel_info)
     return template('index.html', channels_list=channels.list(), type="channel_settings", channel_info=channel_info)
 
 @route('/enter', method='GET')

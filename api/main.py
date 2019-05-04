@@ -82,22 +82,22 @@ def publication_data(publication_ids):
         )
     return publications
 
-def create_new_publication(channel_id, channel_data, publish_in):
+def create_new_publication(channel_id, publish_data, publish_in):
     try:
-        if channel_data['album_cover'] is None:
+        if publish_data['album_cover'] is None:
             raise ValueError
-        if channel_data['track_file'] is None:
+        if publish_data['track_file'] is None:
             raise ValueError
-        if channel_data['artist_name'] is None:
+        if publish_data['artist_name'] is None:
             raise ValueError
-        if channel_data['track_name'] is None:
+        if publish_data['track_name'] is None:
             raise ValueError
     except (TypeError, KeyError):
         raise ValueError
     publish_id = Publications.create(
         channel_id=channel_id,
         publish_in=publish_in,
-        publish_data=channel_data
+        publish_data=publish_data
     )
     return {"publish_id": publish_id}
 
@@ -138,10 +138,10 @@ def creation_handler():
         try:
             if data['channel_data'] is None:
                 raise ValueError
-            channel_data = data['channel_data']
+            publish_data = data['publish_data']
         except (TypeError, KeyError):
             raise ValueError
-        publish_id = create_new_publication(channel_id, channel_data, publish_in)
+        publish_id = create_new_publication(channel_id, publish_data, publish_in)
 
 
     except KeyError:
