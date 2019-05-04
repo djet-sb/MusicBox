@@ -110,7 +110,10 @@ def list_publication(channel_id):
 
 @route('/publication/add', method='POST')
 def creation_handler():
-    """Handles name creation"""
+    """
+    curl --header "Content-Type: application/json"  --request POST --data '{"publish_in":12321321,"channel_id":14,"publish_data":{"album_cover":"File_path","track_file":"Track_file_pach","track_name":"Test track name","artist_name":"test artist name","publish_in":"123653543"}}'  http://0.0.0.0:8280/publication/add
+{"response": "OK", "publish_id": "{'publish_id': <Publications: 2>}"}
+    """
 
     try:
         try:
@@ -136,7 +139,7 @@ def creation_handler():
             raise ValueError
 
         try:
-            if data['channel_data'] is None:
+            if data['publish_data'] is None:
                 raise ValueError
             publish_data = data['publish_data']
         except (TypeError, KeyError):

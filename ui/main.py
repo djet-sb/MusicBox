@@ -1,10 +1,10 @@
 from bottle import route, run, TEMPLATE_PATH, request, jinja2_template as template, view, redirect
-from Helpers.api import ChannelsHelper
+from Helpers.api import ChannelsHelper, PublicationHelper
 import config
 TEMPLATE_PATH.append('./templates')
 channels = ChannelsHelper()
 channels.set_channels()
-
+publications = PublicationHelper()
 
 
 @route('/', method='GET')
@@ -38,7 +38,10 @@ def creation_handler(id):
 @view('index.html')
 def creation_handler(id):
     channel_info = channels.get(id)
-    return template('index.html', channels_list=channels.list(), type="publication_list", channel_info=channel_info)
+    publications.set_publication(id)
+    print(f"asdasdsdas {publications.get()}")
+    return template('index.html', channels_list=channels.list(), type="publication_list", channel_info=channel_info,
+                    publications_info=publications.get()['publication_data'])
 
 @route('/channel/settings/<id>', method='GET')
 @view('index.html')

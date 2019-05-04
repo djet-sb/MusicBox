@@ -85,7 +85,10 @@
           </form>
         </div>
       {% elif type == 'publication_list' %}
-              asdasdasd
+            {% for publications in publications_info %}
+                {{ publications['publish_in'] }} - {{ publications['publish_data']['album_cover'] }}<br>
+            {% endfor %}
+
       {% else %}
                  <h1 class="h2">Main page</h1>
                 <p>How are you?</p>
