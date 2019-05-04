@@ -2,3 +2,5 @@ bottle==0.12.16
 raven
 peewee
 psycopg2-binary
+jinja2
+requests

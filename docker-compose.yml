@@ -17,12 +17,12 @@ services:
                  restart: on-failure
                  ports:
                        - 8280:8280
-       ui:
+        ui:
                  build: ./ui/
                  env_file: docker-compose.envs
                  restart: on-failure
                  ports:
-                       - 8080:8080
+                       - 8180:8180
         pgsql:
                 image: postgres
                 restart: always

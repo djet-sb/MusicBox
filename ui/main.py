@@ -1,55 +1,46 @@
-from bottle import route, response, request, run
-from playhouse.postgres_ext import *
+from bottle import route, run, TEMPLATE_PATH, request, jinja2_template as template, view
+from Helpers.api import ChannelsHelper
 import config
-
-user = config.DATABASE.user
-password = config.DATABASE.password
-db_name = config.DATABASE.db_name
-host = config.DATABASE.host
-db = PostgresqlDatabase(
-    db_name, user=user,
-    password=password,
-    host=host
-)
+TEMPLATE_PATH.append('./templates')
+channels = ChannelsHelper()
+channels.set_channels()
 
 
-class Publications(Model):
-    channel_id = IntegerField()
-    publish_in = IntegerField()
-    published_in = IntegerField(default=0)
-    publish_data = JSONField()
 
-    class Meta:
-        database = db  # This model uses the "people.db" database.
-
-
-class Channels(Model):
-    channel_name = TextField()
-    chat_id = FloatField()
-    token = TextField()
-
-    class Meta:
-        database = db  # This model uses the "people.db" database.
-
-
-try:
-    Channels.create_table(True)
-    Publications.create_table(True)
-except OperationalError as err:
-    print(err)
-    exit(1)
-
-
-# curl --header "Content-Type: application/json"  --request POST --data '{"publish_in":12321321,"channel_id":12,"channel_data":{"album_cover":"File_path","track_file":"Track_file_pach","track_name":"Test track name","artist_name":"test artist name","publish_in":"123653543"}}'  http://127.0.0.1:8280/publication/add
-
-@route('/', method='POST')
+@route('/', method='GET')
 def creation_handler():
-    pass
+    return template('index.html', channels_list=channels.list())
+
+@route('/channel/new', method='GET')
+@view('index.html')
+def creation_handler():
+
+    return template('index.html', channels_list=channels.list(), type="channel_settings", channel_info={})
+
+
+@route('/channel/<id>', method='GET')
+@view('index.html')
+def creation_handler(id):
+    channel_info = channels.get(id)
+    print(channel_info)
+    return template('index.html', channels_list=channels.list(), type="publication_list", channel_info=channel_info)
+
+@route('/channel/settings/<id>', method='GET')
+@view('index.html')
+def creation_handler(id):
+    channel_info = channels.get(id)
+    print(channel_info)
+    return template('index.html', channels_list=channels.list(), type="channel_settings", channel_info=channel_info)
+
+@route('/enter', method='GET')
+def creation_handler():
+    return template('enter.html')
+
 
 
 run(
     host='0.0.0.0',
-    port=config.COMMON.api_port,
+    port=config.COMMON.http_port,
     debug=True,
     reloader=True
 )

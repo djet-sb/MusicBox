@@ -1,5 +1,6 @@
 # source ./example.envs
-
+export API_HOST=127.0.0.1
+export API_PORT=8280
 export UI_SENTRY_DSN=none
 export DATABASE_HOST=127.0.0.1
 export DATABASE_NAME=musicbox
